@@ -31,6 +31,8 @@ setup(name='mingtak.advertiser',
           'plone.namedfile [blobs]',
           # -*- Extra requirements: -*-
           'mingtak.paymentmethod',
+          'mingtak.loginmethod',
+          'mingtak.securitymethod',
       ],
       entry_points="""
       # -*- Entry points: -*-
