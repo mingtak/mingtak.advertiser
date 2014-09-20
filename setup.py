@@ -33,6 +33,7 @@ setup(name='mingtak.advertiser',
           'mingtak.paymentmethod',
           'mingtak.loginmethod',
           'mingtak.securitymethod',
+          'mingtak.sociallink',
       ],
       entry_points="""
       # -*- Entry points: -*-
