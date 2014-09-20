@@ -19,6 +19,9 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from mingtak.advertiser import MessageFactory as _
 
 from mingtak.paymentmethod import payment
+#from mingtak.loginmethod import 
+#from mingtak.securitymethod import
+from mingtak.sociallink import socialnetwork
 
 # Interface class; used to define content-type schema.
 
@@ -47,6 +50,23 @@ class IAdvertiser(form.Schema, IImageScaleTraversable):
             ),
         ),
         required=True,
+    )
+
+#    form.widget(socialNetwork=AutocompleteMultiFieldWidget)
+    socialNetwork = RelationList(
+        title=_(u"Social network"),
+        value_type=RelationChoice(
+            source=ObjPathSourceBinder(
+                object_provides=socialnetwork.ISocialNetwork.__identifier__,
+            ),
+        ),
+        required=False,
+    )
+
+    socialLink = schema.Text(
+        title=_(u"Social network url"),
+        description=_(u"include social network name and link, format like 'facebook,https://www.facebook.com/pages/1398538200399665', one line-one record."),
+        required=False,
     )
 
 
