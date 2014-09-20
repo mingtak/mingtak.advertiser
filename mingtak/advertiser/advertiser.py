@@ -19,8 +19,8 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from mingtak.advertiser import MessageFactory as _
 
 from mingtak.paymentmethod import payment
-#from mingtak.loginmethod import 
-#from mingtak.securitymethod import
+from mingtak.loginmethod import loginmethod
+from mingtak.securitymethod import securitymethod
 from mingtak.sociallink import socialnetwork
 
 # Interface class; used to define content-type schema.
@@ -29,15 +29,15 @@ class IAdvertiser(form.Schema, IImageScaleTraversable):
     """
     Advertiser content type
     """
-    logoImage = NamedBlogImage(
+    logoImage = NamedBlobImage(
         title=_(u"Logo"),
-        description=-(u"Advertiser logo image"),
+        description=_(u"Advertiser logo image"),
         required=True,
     )
 
-    webSite = Schema.URI(
+    webSite = schema.URI(
         title=_(u"Website"),
-        description=-(u"Advertiser website url, must include http://"),
+        description=_(u"Advertiser website url, must include http://"),
         required=True,
     )
  
@@ -52,7 +52,32 @@ class IAdvertiser(form.Schema, IImageScaleTraversable):
         required=True,
     )
 
+#    form.widget(loginMethod=AutocompleteMultiFieldWidget)
+    loginMethod = RelationList(
+        title=_(u"Login method"),
+        value_type=RelationChoice(
+            source=ObjPathSourceBinder(
+                object_provides=loginmethod.ILoginMethod.__identifier__,
+            ),
+        ),
+        required=True,
+    )
+
+#    form.widget(securityMethod=AutocompleteMultiFieldWidget)
+    securityMethod = RelationList(
+        title=_(u"Security method"),
+        value_type=RelationChoice(
+            source=ObjPathSourceBinder(
+                object_provides=securitymethod.ISecurityMethod.__identifier__,
+            ),
+        ),
+        required=False,
+    )
+
+
+
 #    form.widget(socialNetwork=AutocompleteMultiFieldWidget)
+    # binding socialLink.
     socialNetwork = RelationList(
         title=_(u"Social network"),
         value_type=RelationChoice(
@@ -62,7 +87,7 @@ class IAdvertiser(form.Schema, IImageScaleTraversable):
         ),
         required=False,
     )
-
+    # binding socialNetwork.
     socialLink = schema.Text(
         title=_(u"Social network url"),
         description=_(u"include social network name and link, format like 'facebook,https://www.facebook.com/pages/1398538200399665', one line-one record."),
