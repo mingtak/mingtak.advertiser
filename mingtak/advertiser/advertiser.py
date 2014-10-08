@@ -104,4 +104,4 @@ class SampleView(grok.View):
 
     grok.context(IAdvertiser)
     grok.require('zope2.View')
-    # grok.name('view')
+    grok.name('view')
